@@ -1,0 +1,32 @@
+[
+  {
+    "date": "2024-07-26",
+    "event": "Paris Olympics Opening Ceremony",
+    "description": "The 2024 Summer Olympics officially began in Paris, sparking global conversation."
+  },
+  {
+    "date": "2024-09-10",
+    "event": "US Presidential Debate (Harris vs Trump)",
+    "description": "Kamala Harris and Donald Trump faced off in their first presidential debate."
+  },
+  {
+    "date": "2024-11-05",
+    "event": "US Presidential Election Day",
+    "description": "Voters headed to the polls for the 2024 US Presidential Election."
+  },
+  {
+    "date": "2024-11-06",
+    "event": "Election Results Announced",
+    "description": "Donald Trump declared winner of the 2024 US Presidential Election."
+  },
+  {
+    "date": "2025-01-20",
+    "event": "Presidential Inauguration",
+    "description": "Inauguration ceremony for the 47th President of the United States."
+  },
+  {
+    "date": "2025-02-12",
+    "event": "Major Policy Announcement",
+    "description": "Significant spike in activity suggests a major policy announcement or controversy."
+  }
+]
