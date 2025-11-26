@@ -39,41 +39,93 @@ const CopilotTab: React.FC<CopilotTabProps> = ({ data }) => {
     setMessages(prev => [...prev, userMsg]);
     setInput('');
 
-    // Simple Intent Logic
     const prompt = input.toLowerCase();
-    let response: string;
+    let response: string = '';
 
-    if (prompt.includes('author') || prompt.includes('user')) {
+    // Helper: Get top items from an array
+    const getTop = (arr: string[], n = 5) => {
       const counts: Record<string, number> = {};
-      data.forEach(p => {
-        if (p.author && p.author !== '[deleted]') counts[p.author] = (counts[p.author] || 0) + 1;
-      });
-      const top = Object.entries(counts).sort((a, b) => b[1] - a[1]).slice(0, 5);
+      arr.forEach(x => { if(x) counts[x] = (counts[x] || 0) + 1; });
+      return Object.entries(counts).sort((a, b) => b[1] - a[1]).slice(0, n);
+    };
+
+    // 1. Top Sources Query
+    if (prompt.includes('top source') || prompt.includes('top website') || prompt.includes('top domain')) {
+      const domains = data.map(p => p.domain).filter(d => d && d !== 'self' && d !== 'reddit.com' && d !== 'i.redd.it' && d !== 'v.redd.it');
+      const top = getTop(domains as string[], 5);
+      response = "**Top External Sources:**\n" + top.map(([d, c]) => `- **${d}**: ${c} mentions`).join('\n');
+    }
+    
+    // 2. Specific Source Query (e.g., "tell me about twitter.com")
+    else if (prompt.includes('about source') || prompt.includes('about website') || prompt.includes('analyze domain') || data.some(p => p.domain && prompt.includes(p.domain.toLowerCase()))) {
+       const allDomains = Array.from(new Set(data.map(p => p.domain).filter(d => d)));
+       const targetDomain = allDomains.find(d => d && prompt.includes(d.toLowerCase()));
+
+       if (targetDomain) {
+         const subset = data.filter(p => p.domain === targetDomain);
+         const authors = subset.map(p => p.author);
+         const topAuthors = getTop(authors, 3);
+         const avgScore = (subset.reduce((acc, p) => acc + p.score, 0) / subset.length).toFixed(0);
+         
+         response = `**Analysis for ${targetDomain}:**\n` +
+                    `- **Volume:** ${subset.length} posts\n` +
+                    `- **Avg Engagement:** ${avgScore} score\n` +
+                    `\n**Top Accounts sharing this source:**\n` +
+                    topAuthors.map(([a, c]) => `- ${a} (${c} posts)`).join('\n');
+       } else {
+         // Fallback if no specific domain matched but intent was there
+         response = "I noticed you asked about a source, but I couldn't match it to a specific domain in the dataset. Try asking about 'twitter.com' or 'youtube.com'.";
+       }
+    }
+
+    // 3. "New and Particular Data" (Search functionality)
+    else if (prompt.includes('search') || prompt.includes('find') || prompt.includes('latest') || prompt.includes('about')) {
+       const stopWords = ['tell', 'me', 'about', 'find', 'search', 'show', 'latest', 'new', 'data', 'is', 'what', 'the', 'for'];
+       const keywords = prompt.split(' ').filter(w => !stopWords.includes(w)).join(' ');
+       
+       if (keywords.length > 1) {
+         const matches = data.filter(p => 
+           p.title.toLowerCase().includes(keywords) || 
+           p.selftext.toLowerCase().includes(keywords)
+         );
+         
+         if (matches.length > 0) {
+           const recent = matches.sort((a, b) => b.created_utc - a.created_utc).slice(0, 3);
+           response = `**Found ${matches.length} posts related to "${keywords}":**\n\n` +
+                      `**Latest Updates:**\n` +
+                      recent.map(p => `- [${p.date}] ${p.title.slice(0, 60)}...`).join('\n');
+         } else {
+           response = `I searched for "${keywords}" but didn't find any matching posts in the current dataset.`;
+         }
+       } else {
+          response = "What specific topic or keyword would you like me to search for?";
+       }
+    }
+
+    // 4. Existing Intents (Authors, Sentiment, Trends)
+    else if (prompt.includes('author') || prompt.includes('user')) {
+      const top = getTop(data.map(p => p.author).filter(a => a !== '[deleted]'), 5);
       response = "**Top Active Authors:**\n" + top.map(([k, v]) => `- ${k}: ${v} posts`).join('\n');
-    } else if (prompt.includes('sentiment')) {
+    } 
+    else if (prompt.includes('sentiment')) {
       const counts = { Positive: 0, Negative: 0, Neutral: 0 };
-      data.forEach(p => counts[p.sentiment_label]++);
+      data.forEach(p => { if(p.sentiment_label) counts[p.sentiment_label] = (counts[p.sentiment_label] || 0) + 1 });
       const total = data.length;
       response = `**Sentiment Overview:**\n- Positive: ${((counts.Positive / total) * 100).toFixed(1)}%\n- Negative: ${((counts.Negative / total) * 100).toFixed(1)}%\n- Neutral: ${((counts.Neutral / total) * 100).toFixed(1)}%`;
-    } else if (prompt.includes('trend') || prompt.includes('time')) {
-      const counts: Record<string, number> = {};
-      data.forEach(p => counts[p.date] = (counts[p.date] || 0) + 1);
-      const peakDate = Object.entries(counts).sort((a, b) => b[1] - a[1])[0]?.[0];
-      response = `Activity peaked on **${peakDate}**. Check the 'Overview' tab for the full timeline.`;
-    } else if (prompt.includes('summary')) {
-      const uniqueAuthors = new Set(data.map(p => p.author)).size;
-      const topDomains = new Set(data.map(p => p.domain)).size;
-      response = `**Executive Summary:**\nAnalyzing ${data.length} posts. The conversation is driven by ${uniqueAuthors} unique authors. Major themes involve ${topDomains} external sources.`;
-    } else if (prompt.includes('news') || prompt.includes('spread') || prompt.includes('what')) {
-      const topDomains = Object.entries(
-        data.reduce((acc, p) => {
-          if (p.domain && p.domain !== 'self') acc[p.domain] = (acc[p.domain] || 0) + 1;
-          return acc;
-        }, {} as Record<string, number>)
-      ).sort((a, b) => b[1] - a[1]).slice(0, 3);
-      response = `**News Analysis:**\nThe most discussed topics are from:\n${topDomains.map(([domain, count]) => `- ${domain}: ${count} mentions`).join('\n')}\n\nCheck the 'Network' tab for interaction patterns.`;
-    } else {
-      response = "I can help you analyze authors, sentiment, trends, or provide a summary. Try asking 'Who are the top authors?' or 'What news is being spread?'";
+    }
+    else if (prompt.includes('trend') || prompt.includes('time')) {
+       const counts: Record<string, number> = {};
+       data.forEach(p => counts[p.date] = (counts[p.date] || 0) + 1);
+       const peakDate = Object.entries(counts).sort((a, b) => b[1] - a[1])[0]?.[0];
+       response = `Activity peaked on **${peakDate}**. Check the 'Overview' tab for the full timeline.`;
+    }
+    else if (prompt.includes('summary')) {
+       const uniqueAuthors = new Set(data.map(p => p.author)).size;
+       const uniqueDomains = new Set(data.map(p => p.domain)).size;
+       response = `**Executive Summary:**\nAnalyzing ${data.length} posts. The conversation is driven by ${uniqueAuthors} unique authors. Major themes involve ${uniqueDomains} external sources.`;
+    }
+    else {
+      response = "I can help you analyze sources, authors, sentiment, or specific topics. Try asking:\n- 'What are the top sources?'\n- 'Tell me about twitter.com'\n- 'Find posts about election'";
     }
 
     setTimeout(() => {
@@ -84,7 +136,7 @@ const CopilotTab: React.FC<CopilotTabProps> = ({ data }) => {
   return (
     <div style={cardStyle}>
       <div style={{ padding: '16px', borderBottom: '1px solid #f3f4f6' }}>
-        <h3 style={{ fontSize: '18px', fontWeight: '600', color: '#1f2937', margin: 0 }}>🤖 Analyst Copilot</h3>
+        <h3 style={{ fontSize: '18px', fontWeight: '600', color: '#1f2937', margin: 0 }}>🤖 Analyst AI</h3>
         <p style={{ fontSize: '14px', color: '#6b7280', margin: '4px 0 0 0' }}>Ask questions about the data.</p>
       </div>
 
@@ -124,7 +176,7 @@ const CopilotTab: React.FC<CopilotTabProps> = ({ data }) => {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-            placeholder="Ask the copilot..."
+            placeholder="Ask AI..."
             style={{ 
               flex: 1, 
               border: '1px solid #d1d5db', 

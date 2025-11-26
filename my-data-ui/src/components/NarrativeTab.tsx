@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { format } from 'date-fns';
+import SemanticMap from './SemanticMap';
 
 interface NarrativeTabProps {
   // data: ProcessedPost[]; // Removed unused prop
@@ -155,6 +156,10 @@ const NarrativeTab: React.FC<NarrativeTabProps> = () => {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+      
+      {/* Semantic Map Visualization */}
+      <SemanticMap />
+
       <div style={cardStyle}>
         <h3 style={{ fontSize: '18px', fontWeight: '600', color: '#1f2937', marginBottom: '8px' }}>
           🧬 Topic Modeling (LDA)

@@ -62,7 +62,7 @@ const Dashboard: React.FC<DashboardProps> = ({ data, fullDataLength }) => {
             active={activeTab === 'copilot'} 
             onClick={() => setActiveTab('copilot')} 
             icon={<MessageSquare style={{ width: '16px', height: '16px', marginRight: '8px' }} />}
-            label="Analyst Copilot" 
+            label="Analyst AI" 
           />
         </nav>
       </div>
