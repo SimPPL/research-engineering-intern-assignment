@@ -23,8 +23,8 @@ In the long run, this research intends to accomplish the following objectives:
 
 There are some hosted web demos (note that some are blog posts, but they include graphs that we would want you to develop in an interactive dashboard) that **tell a story** with data that you should look into. We do not expect you to replicate or copy any of these but we do want you to understand the "tell us a story with data" goal of this assignment better by looking at these:
 1. [Fabio Gieglietto's TikTok Coordinated Behavior Report](https://fabiogiglietto.github.io/tiktok_csbn/tt_viz.html)
-2. [Integrity Institute's Misinformation Amplification Dashboard](https://integrityinstitute.org/blog/misinformation-amplification-tracking-dashboard)
-3. [News Literacy Project Misinformation Dashboard](https://misinfodashboard.newslit.org/)
+2. [Integrity Institute's Information Amplification Dashboard](https://integrityinstitute.org/blog/misinformation-amplification-tracking-dashboard)
+3. [News Literacy Project Dashboard](https://misinfodashboard.newslit.org/)
 4. [Tableau examples (note: we don't use Tableau, and expect you to use Python or Javascript for this assignment, but these are interesting examples for inspiration)](https://public.tableau.com/app/search/vizzes/misinformation)
 
 ## Rubric for Evaluation
@@ -134,7 +134,7 @@ Focus on the analysis you are presenting and the story you are telling us throug
 
 Presentation matters! Make sure your submission is easy to understand. Create an intuitive and meaningful README file or a Wiki that can be used to review your solution. Host it so it is accessible by anyone. Ensure that you share a video demo even if it is hosted, so that users understand how to interpret the insights you present.
 
-At SimPPL, we're building tools to analyze how information spreads on social media, especially from unreliable sources. Your work will help inform how to scale our analysis to a wider range of platforms and handle larger datasets. This is crucial for tracking trends, identifying misinformation, and understanding how narratives spread online.
+At SimPPL, we're building tools to analyze how information spreads on social media, especially from unreliable sources. Your work will help inform how to scale our analysis to a wider range of platforms and handle larger datasets. This is crucial for tracking trends, identifying digital harms, and understanding how narratives spread online.
 
 We're excited to see your solution!
 
