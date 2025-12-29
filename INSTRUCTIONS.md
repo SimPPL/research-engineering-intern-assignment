@@ -3,13 +3,13 @@ We're thrilled you're interested in joining SimPPL! This assignment is designed 
 
 ## Why do we care about this?
 
-We have built tools for collecting and analyzing data from Reddit and Twitter including [Parrot](https://parrot.simppl.org) to study the sharing of news from certain unreliable Russian media providers. To ramp you up towards understanding how to go about extending such platforms, and to expand your understanding of the broader social media ecosystem, we would like you to construct a similar analysis to Parrot by studying other publicly accessible platforms listed above. We would like you to present an analysis of a broader range of viewpoints from different (apolitical / politically biased) groups. You may even pick a case study to present e.g. a relevant controversy, campaign, or civic event. 
+We have built tools for collecting and analyzing data from Reddit and Twitter including now-obsolete platform [Parrot](https://www.youtube.com/watch?v=FVetP1D5u0o) to study the sharing of news from certain unreliable state-backed media. To ramp you up towards understanding how to go about extending such platforms, and to expand your understanding of the broader social media ecosystem, we would like you to develop a similar system to trace digital narratives. We would like you to present an analysis of a broader range of viewpoints from different (apolitical / politically biased) groups. You may even pick a case study to present e.g. a relevant controversy, campaign, or civic event. The goal is for you to be creative and explore what could be possible to contribute a meaningful assignment rather than just sticking to our instructions. 
 
 In the long run, this research intends to accomplish the following objectives:
 
-1. Track different popular trends to understand how public content is propagated on different social media platforms.
-2. Identify posts containing misleading information with the use of claims verification mechanisms.
-3. Analyze the trends across a large number of influential accounts over time in order to report on the influence of a narrative.
+1. Track different popular trends to understand how public content is shared on different social media platforms.
+2. Identify digital threats such as actors and networks promoting scams, spam, fraud, hate, harassment, or misleading claims.
+3. Analyze the trends across a large number of influential accounts over time in order to report on the _influence_ of a narrative. Here, you must think and develop your own methods to report what you think is most interesting about the analysis you are doing. 
 
 ## Task Objectives
 
@@ -19,7 +19,11 @@ In the long run, this research intends to accomplish the following objectives:
 
 3. **Build and Deploy an Investigative Reporting Dashboard**: Develop and host an interactive dashboard to showcase your analysis. You should be able to query the dashboard to generate meaningful insights.
 
-## Examples of "How to Tell a Story with Data" (please spend time on this so you understand the assignment goals)
+Before moving on, please understand that even if you accomplish all of these objectives that does not mean you have submitted a *good* assignment. This is simply because almost all of the applying candidates accomplish all these objectives very well--making it a bare minimum for qualifying. 
+
+**Note:** What we ultimately use to evaluate applicants is how well the assignment reflects your expertise and knowledge of latest techniques (or how well you were able to _look up, implement, AND explain clearly_ the latest techniques for the same), the level of thought you put into the design of the submission, and the goal you decided that this exploratory platform should enable for its users. That's where we want to see how creative you can be, and it comes across very clearly the minute we have interviews with applicants--especially if you are overly dependent on AI to help with each of these goals instead of thinking for yourself. 
+
+## Examples of "How to Tell a Story with Data" (please spend time looking up other similar platforms and tell us what you find by including them in your README)
 
 There are some hosted web demos (note that some are blog posts, but they include graphs that we would want you to develop in an interactive dashboard) that **tell a story** with data that you should look into. We do not expect you to replicate or copy any of these but we do want you to understand the "tell us a story with data" goal of this assignment better by looking at these:
 1. [Fabio Gieglietto's TikTok Coordinated Behavior Report](https://fabiogiglietto.github.io/tiktok_csbn/tt_viz.html)
@@ -28,7 +32,8 @@ There are some hosted web demos (note that some are blog posts, but they include
 4. [Tableau examples (note: we don't use Tableau, and expect you to use Python or Javascript for this assignment, but these are interesting examples for inspiration)](https://public.tableau.com/app/search/vizzes/misinformation)
 
 ## Rubric for Evaluation
-Take a look at <a href="https://parrot.simppl.org/">parrot</a> that we have previously built as a visualization platform for Twitter data (it does not have search integrations though it is a good example of a solution other than that). Below is the rubric we will use for your evaluation, provided as a checklist for you to evaluate your own assignment before you submit it to us. 
+
+Below is the rubric we will use for your evaluation, provided as a checklist for you to evaluate your own assignment before you submit it to us. Again, remember the note above about how we evaluate assignments -- even if yours doesn't meet all these rubrics but it is unique from other submissions while reflective of your technical expertise, we would be open to advancing you in the interview process.
 
 1. **IMPORTANT** Is the solution well-documented such that it is easy to understand its usage?
   
@@ -132,9 +137,9 @@ We have seen enough horrendous code written by AI and been forced to part with a
 
 Focus on the analysis you are presenting and the story you are telling us through it. A well-designed and scalable system is more important than a complex one with a ton of features. Consider using innovative technologies in a user-friendly manner to create unique features for your platform such as AI-generated summaries that are adaptable to the data a user searches for, using your platform.
 
-Presentation matters! Make sure your submission is easy to understand. Create an intuitive and meaningful README file or a Wiki that can be used to review your solution. Host it so it is accessible by anyone. Ensure that you share a video demo even if it is hosted, so that users understand how to interpret the insights you present.
+Presentation matters! Make sure your submission is easy to understand. Create an intuitive and meaningful README file or a Wiki that can be used to review your solution. Host it so it is accessible by anyone. Ensure that you share a video demo even if it is hosted, so that users understand how to interpret the insights you present. Go through the [PRO TIPS](/PRO-TIPS.md) to get a better sense of what might help you be successful in this endeavor.
 
-At SimPPL, we're building tools to analyze how information spreads on social media, especially from unreliable sources. Your work will help inform how to scale our analysis to a wider range of platforms and handle larger datasets. This is crucial for tracking trends, identifying digital harms, and understanding how narratives spread online.
+At SimPPL, we're building tools to analyze how information spreads on social media. Your work will help inform how to scale our analysis to a wider range of platforms and handle larger datasets. This is crucial for tracking trends, identifying digital harms, and understanding how narratives spread online.
 
 We're excited to see your solution!
 
